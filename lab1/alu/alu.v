@@ -28,7 +28,7 @@ always @(*) begin
 		end
 		4'b0001 : begin
 			C = A - B;
-			if(A[data_width - 1] == 1'b1 && ~B[data_width - 1] == 1'b1 && C[data_width - 1] == 1'b0
+			if(A[data_width - 1] == 1'b1 && B[data_width - 1] == 1'b1 && C[data_width - 1] == 1'b0
 			   || A[data_width - 1] == 1'b1 && B[data_width - 1] == 1'b1 && C[data_width - 1] == 1'b0)
 				OverflowFlag = 1'b1;
 			else
