@@ -7,9 +7,6 @@ module alu #(parameter data_width = 16) (
 // Do not use delay in your implementation.
 
 // You can declare any variables as needed.
-/*
-	YOUR VARIABLE DECLARATION...
-*/
 
 initial begin
 	C = 0;
@@ -20,20 +17,19 @@ always @(*) begin
 	case(FuncCode)
 		4'b0000 : begin
 			C = A + B;
-			if(A[data_width - 1] == 1'b1 && B[data_width - 1] == 1'b1 && C[data_width - 1] == 1'b0
-			   || A[data_width - 1] == 1'b1 && B[data_width - 1] == 1'b1 && C[data_width - 1] == 1'b0)
+			if(A[data_width - 1] && B[data_width - 1] && !C[data_width - 1] ||
+			  !A[data_width - 1] && !B[data_width - 1] && C[data_width - 1])
 				OverflowFlag = 1'b1;
 			else
 				OverflowFlag = 1'b0;
 		end
 		4'b0001 : begin
 			C = A - B;
-			if(A[data_width - 1] == 1'b1 && B[data_width - 1] == 1'b1 && C[data_width - 1] == 1'b0
-			   || A[data_width - 1] == 1'b1 && B[data_width - 1] == 1'b1 && C[data_width - 1] == 1'b0)
+			if(A[data_width - 1] && !B[data_width - 1] && !C[data_width - 1] ||
+			  !A[data_width - 1] && B[data_width - 1] && C[data_width - 1])
 				OverflowFlag = 1'b1;
 			else
-				OverflowFlag = 1'b0;*/
-			OverflowFlag = 1'b0;
+				OverflowFlag = 1'b0;
 		end
 		4'b0010 : begin
 			C = A;
@@ -80,7 +76,7 @@ always @(*) begin
 			OverflowFlag = 1'b0;
 		end
 		4'b1101 : begin
-			C = A >>> 1;
+			C = $signed(A) >>> 1;
 			OverflowFlag = 1'b0;
 		end
 		4'b1110 : begin
